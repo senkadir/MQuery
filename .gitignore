@@ -4,3 +4,7 @@
 
 /.vs
 /MQuery/.vs/MQuery
+/MQuery/MQuery/bin/Debug/netcoreapp2.1
+/MQuery/MQuery.ConsoleApp/bin/Debug/netcoreapp2.1
+/MQuery/MQuery.ConsoleApp/obj/Debug/netcoreapp2.1
+/MQuery/MQuery.ConsoleApp/obj

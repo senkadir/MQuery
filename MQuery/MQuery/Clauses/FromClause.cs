@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MQuery
+namespace MQuery.Clauses
 {
-    class Query
+    public class FromClause : ClauseBase
     {
     }
 }

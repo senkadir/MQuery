@@ -1,0 +1,9 @@
+C:\Users\AbdulkadirSen\source\repos\MQuery\MQuery\MQuery\bin\Debug\netcoreapp2.1\MQuery.deps.json
+C:\Users\AbdulkadirSen\source\repos\MQuery\MQuery\MQuery\bin\Debug\netcoreapp2.1\MQuery.dll
+C:\Users\AbdulkadirSen\source\repos\MQuery\MQuery\MQuery\bin\Debug\netcoreapp2.1\MQuery.pdb
+C:\Users\AbdulkadirSen\source\repos\MQuery\MQuery\MQuery\obj\Debug\netcoreapp2.1\MQuery.csprojAssemblyReference.cache
+C:\Users\AbdulkadirSen\source\repos\MQuery\MQuery\MQuery\obj\Debug\netcoreapp2.1\MQuery.csproj.CoreCompileInputs.cache
+C:\Users\AbdulkadirSen\source\repos\MQuery\MQuery\MQuery\obj\Debug\netcoreapp2.1\MQuery.AssemblyInfoInputs.cache
+C:\Users\AbdulkadirSen\source\repos\MQuery\MQuery\MQuery\obj\Debug\netcoreapp2.1\MQuery.AssemblyInfo.cs
+C:\Users\AbdulkadirSen\source\repos\MQuery\MQuery\MQuery\obj\Debug\netcoreapp2.1\MQuery.dll
+C:\Users\AbdulkadirSen\source\repos\MQuery\MQuery\MQuery\obj\Debug\netcoreapp2.1\MQuery.pdb
