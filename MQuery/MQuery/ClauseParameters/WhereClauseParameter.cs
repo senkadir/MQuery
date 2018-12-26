@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MQuery
+﻿namespace MQuery
 {
     public class WhereClauseParameter : ClauseParameterBase
     {
@@ -14,7 +10,7 @@ namespace MQuery
 
         public override string ToString()
         {
-            return $" {ColumnName} {Operand} {Value} ";
+            return $" [{ColumnName}] {Operand} {Value} ";
         }
     }
 }

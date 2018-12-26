@@ -5,78 +5,76 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Linq;
 using MQuery.Tools.Extensions;
+using System.Reflection;
 
 namespace MQuery
 {
     public class Query<T> where T : class
     {
-        StringBuilder query;
+        public string RawSql = "";
 
-        Dictionary<string, ClauseBase> Clauses;
+        public string Table { get { return typeof(T).Name; } }
+
+        public List<StatementBase> Statements { get; private set; } = new List<StatementBase>();
 
         public Query()
         {
-            query = new StringBuilder();
-            Clauses = new Dictionary<string, ClauseBase>();
         }
 
         public Query<T> Select()
         {
-            query.Append("SELECT * ");
+            SelectStatement select = new SelectStatement();
+            Statements.Add(select);
 
             return this;
         }
 
         public Query<T> Select(params Expression<Func<T, object>>[] columns)
         {
-            query.Append("SELECT ");
+            SelectStatement select = new SelectStatement
+            {
+                Columns = columns.GetMemberName()
+            };
 
-            var cols = columns.GetMemberName();
-
-            query.Append(string.Join(", ", cols.Select(x => $"[{x}]")));
+            Statements.Add(select);
 
             return this;
         }
 
         public Query<T> From()
         {
-            query.Append($"FROM {typeof(T).Name}s ");
-
             return this;
         }
 
         public Query<T> Where()
         {
-            Clauses.Add("WHERE", new WhereClause());
-
             return this;
         }
 
         public Query<T> Where(string column, string operand, object value)
         {
-            var where = (WhereClause)Clauses["WHERE"];
-            where.Parameters.Add(new WhereClauseParameter() { ColumnName = column, Operand = operand, Value = value });
+            return this;
+        }
+
+        public Query<T> Insert(object data)
+        {
+            var insert = new InsertStatement();
+
+            var props = data.GetType().GetRuntimeProperties();
+
+            foreach (var prop in props)
+            {
+                insert.Values.Add(prop.Name, prop.GetValue(data));
+            }
+
+            Statements.Add(insert);
 
             return this;
         }
 
         public override string ToString()
         {
-            foreach (var clause in Clauses.Values)
-            {
-                if (clause is WhereClause whereClause)
-                {
-                    query.Append(" WHERE ");
-
-                    if (whereClause.Parameters.Any())
-                    {
-                        query.Append(string.Join("AND", whereClause.Parameters));
-                    }
-                }
-
-            }
-
-            return query.ToString();
+            return RawSql;
         }
     }
 }

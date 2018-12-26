@@ -11,7 +11,9 @@ namespace MQuery.ConsoleApp
 
         static void Main(string[] args)
         {
-            GenericTest();
+            //GenericTest();
+
+            InsertTest();
 
             Console.Read();
         }
@@ -40,6 +42,25 @@ namespace MQuery.ConsoleApp
             }
 
             Console.Read();
+        }
+
+        public static void InsertTest()
+        {
+            Compiler compiler = new Compiler(true);
+
+            var book = new { Name = "O topraklar bizimdi", Writer = "Cengiz Aytmatov", PublishDate = DateTime.Now.AddYears(-53), Pages = 157 };
+
+            var q = new Query<Book>()
+                        .Insert(book);
+
+            var qq = new Query<Book>()
+                        .Select(x => x.Name, x => x.Id);
+
+            compiler.Compile(q);
+            compiler.Compile(qq);
+
+            Console.WriteLine(q.RawSql);
+            Console.WriteLine(qq.RawSql);
         }
     }
 }
