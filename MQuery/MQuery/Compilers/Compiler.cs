@@ -18,16 +18,13 @@ namespace MQuery
         {
             Table = Plurize ? $"{query.Table}s" : query.Table;
 
-            foreach (var statement in query.Statements)
+            if (query.CurrentMethod is InsertStatement insertStatement)
             {
-                if (statement is InsertStatement insertStatement)
-                {
-                    query.RawSql += CompileInsertStatement(insertStatement);
-                }
-                else if (statement is SelectStatement selectStatement)
-                {
-                    query.RawSql += CompileSelectStatement(selectStatement);
-                }
+                query.RawSql += CompileInsertStatement(insertStatement);
+            }
+            else if (query.CurrentMethod is SelectStatement selectStatement)
+            {
+                query.RawSql += CompileSelectStatement(selectStatement);
             }
 
             return string.Empty;
@@ -73,7 +70,23 @@ namespace MQuery
 
             raw.Append($" FROM [{Table}]");
 
+            if (statement.Wheres.Count > 0)
+            {
+                raw.Append($" WHERE ");
+
+                raw.Append(CompileWheres(statement));
+            }
+
             return raw.ToString();
+        }
+
+        private string CompileWheres(StatementBase statement)
+        {
+            StringBuilder wheres = new StringBuilder();
+
+            wheres.Append(string.Join(" AND ", statement.Wheres.Select(x => $"[{x.ColumnName}] {x.Operand} '{x.Value}'")));
+
+            return wheres.ToString();
         }
     }
 }

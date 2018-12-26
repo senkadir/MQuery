@@ -15,7 +15,7 @@ namespace MQuery
 
         public string Table { get { return typeof(T).Name; } }
 
-        public List<StatementBase> Statements { get; private set; } = new List<StatementBase>();
+        public StatementBase CurrentMethod;
 
         public Query()
         {
@@ -23,8 +23,7 @@ namespace MQuery
 
         public Query<T> Select()
         {
-            SelectStatement select = new SelectStatement();
-            Statements.Add(select);
+            CurrentMethod = new SelectStatement();
 
             return this;
         }
@@ -36,7 +35,7 @@ namespace MQuery
                 Columns = columns.GetMemberName()
             };
 
-            Statements.Add(select);
+            CurrentMethod = select;
 
             return this;
         }
@@ -53,6 +52,15 @@ namespace MQuery
 
         public Query<T> Where(string column, string operand, object value)
         {
+            WhereClauseParameter where = new WhereClauseParameter()
+            {
+                ColumnName = column,
+                Operand = operand,
+                Value = value
+            };
+
+            CurrentMethod.Wheres.Add(where);
+
             return this;
         }
 
@@ -67,7 +75,7 @@ namespace MQuery
                 insert.Values.Add(prop.Name, prop.GetValue(data));
             }
 
-            Statements.Add(insert);
+            CurrentMethod = insert;
 
             return this;
         }

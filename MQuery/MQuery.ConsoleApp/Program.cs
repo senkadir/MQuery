@@ -54,7 +54,9 @@ namespace MQuery.ConsoleApp
                         .Insert(book);
 
             var qq = new Query<Book>()
-                        .Select(x => x.Name, x => x.Id);
+                        .Select(x => x.Name, x => x.Id)
+                        .Where("Name", "=", "O topraklar bizimdi")
+                        .Where("Id", "=", "1");
 
             compiler.Compile(q);
             compiler.Compile(qq);
